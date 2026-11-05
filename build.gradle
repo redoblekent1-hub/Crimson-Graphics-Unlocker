@@ -1,13 +1,18 @@
-buildscript {
+pluginManagement {
     repositories {
         google()
         mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
+        gradlePluginPortal()
     }
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // Added the missing repository URL link for Xposed libraries
+        maven { url "https://xposed.info" }
+    }
 }
+rootProject.name = "CrimsonGraphicsUnlocker"
+include ':app'
