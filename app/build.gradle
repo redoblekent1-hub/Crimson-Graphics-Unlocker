@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    // Switched to the modern, active LSPosed-maintained Xposed API archive link
-    compileOnly 'org.lsposed.lsposed:api:93'
+    // Relying on internal stub packages to compile without network dependencies
+    implementation 'androidx.annotation:annotation:1.6.0'
 }
