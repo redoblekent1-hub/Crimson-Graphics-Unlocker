@@ -8,7 +8,6 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.Light">
         
-        <!-- Every meta-data tag must use the full android: prefix -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
