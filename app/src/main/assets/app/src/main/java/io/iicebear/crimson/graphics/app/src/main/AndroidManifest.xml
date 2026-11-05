@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://android.com"
+    package="io.iicebear.crimson.graphics">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="Crimson Graphics Unlocker"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault.Light">
+        
+        <!-- Activates the Xposed flag so management apps detect it -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+
+        <!-- Description string displayed within LSPosed/Xposed Managers -->
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Unlocks Ultra/Extreme graphics presets and flagship rendering profiles for targeted mobile games." />
+
+        <!-- Target system hook layout version API target entry point -->
+        <meta-data
+            android:name="xposedminversion"
+            android:value="82" />
+
+        <!-- Basic Module Main View Activity Configuration -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
