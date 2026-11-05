@@ -23,5 +23,6 @@ android {
 }
 
 dependencies {
-    compileOnly 'de.robv.android.xposed:api:82'
+    // Switched to the active official mirror group hosted securely on Maven Central
+    compileOnly 'api.xposed:api:82'
 }
