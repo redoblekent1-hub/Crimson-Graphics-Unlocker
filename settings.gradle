@@ -10,9 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // Switched out the timed-out server for reliable fallback mirrors
-        maven { url "https://jitpack.io" }
-        maven { url "https://sonatype.org" }
     }
 }
 rootProject.name = "CrimsonGraphicsUnlocker"
