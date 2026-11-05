@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://android.com">
+<manifest xmlns:android="http://android.com"
+    package="io.iicebear.crimson.graphics">
 
     <application
         android:allowBackup="true"
@@ -7,7 +8,7 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.Light">
         
-        <!-- Corrected: Added 'android:' prefix to all names -->
+        <!-- Every meta-data tag must use the full android: prefix -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" />
