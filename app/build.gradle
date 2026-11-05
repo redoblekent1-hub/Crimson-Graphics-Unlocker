@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    // Switched to the active official mirror group hosted securely on Maven Central
-    compileOnly 'api.xposed:api:82'
+    // Switched to the modern, active LSPosed-maintained Xposed API archive link
+    compileOnly 'org.lsposed.lsposed:api:93'
 }
