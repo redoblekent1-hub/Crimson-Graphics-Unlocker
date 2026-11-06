@@ -19,7 +19,6 @@ public class MainHook implements IXposedHookLoadPackage {
             lpparam.classLoader,
             "getDevicePerformanceTier", 
             new XC_MethodHook() {
-                @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     param.setResult(3); 
                 }
@@ -31,7 +30,6 @@ public class MainHook implements IXposedHookLoadPackage {
             lpparam.classLoader,
             "isLowEndDevice",
             new XC_MethodHook() {
-                @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     param.setResult(false);
                 }
@@ -39,4 +37,3 @@ public class MainHook implements IXposedHookLoadPackage {
         );
     }
 }
-
