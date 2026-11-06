@@ -25,18 +25,9 @@ jobs:
       with:
         gradle-version: 8.2
 
-    - name: Force Injection of Strict Official Manifest
+    - name: Force Injection of Strict Official Manifest via Base64
       run: |
-        cat << 'EOF' > app/src/main/AndroidManifest.xml
-        <?xml version="1.0" encoding="utf-8"?>
-        <manifest xmlns:android="http://android.com">
-            <application android:hasCode="true" android:label="Crimson Graphics">
-                <meta-data android:name="xposedmodule" android:value="true" />
-                <meta-data android:name="xposeddescription" android:value="Unlocks Ultra/Extreme graphics presets." />
-                <meta-data android:name="xposedminversion" android:value="82" />
-            </application>
-        </manifest>
-        EOF
+        echo "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPG1hbmlmZXN0IHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCI+CiAgICA8YXBwbGljYXRpb24gYW5kcm9pZDpoYXNDb2RlPSJ0cnVlIiBhbmRyb2lkOmxhYmVsPSJDcmltc29uIEdyYXBoaWNzIj4KICAgICAgICA8bWV0YS1kYXRhIGFuZHJvaWQ6bmFtZT0ieHBvc2VkbW9kdWxlIiBhbmRyb2lkOnZhbHVlPSJ0cnVlIiAvPgogICAgICAgIDxtZXRhLWRhdGEgYW5kcm9pZDpuYW1lPSJ4cG9zZWRkZXNjcmlwdGlvbiIgYW5kcm9pZDp2YWx1ZT0iVW5sb2NrcyBVbHRyYS9FeHRyZW1lIGdyYXBoaWNzIHByZXNldHMuIiAvPgogICAgICAgIDxtZXRhLWRhdGEgYW5kcm9pZDpuYW1lPSJ4cG9zZWRtaW52ZXJzaW9uIiBhbmRyb2lkOnZhbHVlPSI4MiIgLz4KICAgIDwvYXBwbGljYXRpb24+CjwvbWFuaWZlc3Q+" | base64 -d > app/src/main/AndroidManifest.xml
 
     - name: Build Debug APK with Wrapper
       run: gradle assembleDebug
