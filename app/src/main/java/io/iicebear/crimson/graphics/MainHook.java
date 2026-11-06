@@ -14,8 +14,7 @@ public class MainHook implements IXposedHookLoadPackage {
             return;
         }
         
-        // Hook the global system RAM metric query to trick the engine's capability check 
-        // without spoofing the physical GPU hardware lines
+        // 1. Force the system configuration to report a 64-bit architecture
         XposedHelpers.findAndHookMethod(
             "java.lang.System", 
             lpparam.classLoader,
@@ -31,8 +30,7 @@ public class MainHook implements IXposedHookLoadPackage {
             }
         );
 
-        // Force Android's ActivityManager memory reports to fake a high-tier free memory overhead 
-        // to bypass the engine's low-RAM draw-distance clamping
+        // 2. Bypass low memory limits by forcing the RAM evaluation to return false
         XposedHelpers.findAndHookMethod(
             "android.app.ActivityManager",
             lpparam.classLoader,
