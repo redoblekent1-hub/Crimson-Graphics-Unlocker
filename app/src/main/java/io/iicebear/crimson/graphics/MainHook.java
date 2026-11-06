@@ -14,7 +14,7 @@ public class MainHook implements IXposedHookLoadPackage {
             return;
         }
         
-        // 1. Force the system configuration to report a 64-bit architecture
+        // 1. Restore the working architecture framework hook
         XposedHelpers.findAndHookMethod(
             "java.lang.System", 
             lpparam.classLoader,
@@ -22,7 +22,7 @@ public class MainHook implements IXposedHookLoadPackage {
             String.class,
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    if (param.args != null && param.args.length > 0) {
+                    if (param.args != null && param.args.length > 0 && param.args[0] instanceof String) {
                         String property = (String) param.args[0];
                         if ("os.arch".equals(property)) {
                             param.setResult("aarch64");
@@ -32,7 +32,7 @@ public class MainHook implements IXposedHookLoadPackage {
             }
         );
 
-        // 2. Bypass low memory limits by forcing the RAM evaluation to return false
+        // 2. Restore the working Low-RAM bypass hook
         XposedHelpers.findAndHookMethod(
             "android.app.ActivityManager",
             lpparam.classLoader,
@@ -44,7 +44,7 @@ public class MainHook implements IXposedHookLoadPackage {
             }
         );
 
-        // 3. Inject system properties to unlock high-performance asset streaming thresholds
+        // 3. Add the extended draw-distance threshold system overrides correctly
         XposedHelpers.findAndHookMethod(
             "android.os.SystemProperties",
             lpparam.classLoader,
@@ -52,7 +52,7 @@ public class MainHook implements IXposedHookLoadPackage {
             String.class,
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    if (param.args != null && param.args.length > 0) {
+                    if (param.args != null && param.args.length > 0 && param.args[0] instanceof String) {
                         String key = (String) param.args[0];
                         if ("ro.config.low_ram".equals(key)) {
                             param.setResult("false");
