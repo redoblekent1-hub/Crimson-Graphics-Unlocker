@@ -22,9 +22,11 @@ public class MainHook implements IXposedHookLoadPackage {
             String.class,
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    String property = (String) param.args;
-                    if ("os.arch".equals(property)) {
-                        param.setResult("aarch64");
+                    if (param.args != null && param.args.length > 0) {
+                        String property = (String) param.args[0];
+                        if ("os.arch".equals(property)) {
+                            param.setResult("aarch64");
+                        }
                     }
                 }
             }
@@ -50,12 +52,14 @@ public class MainHook implements IXposedHookLoadPackage {
             String.class,
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    String key = (String) param.args;
-                    if ("ro.config.low_ram".equals(key)) {
-                        param.setResult("false");
-                    }
-                    if ("ro.sys.fw.bg_apps_limit".equals(key)) {
-                        param.setResult("32");
+                    if (param.args != null && param.args.length > 0) {
+                        String key = (String) param.args[0];
+                        if ("ro.config.low_ram".equals(key)) {
+                            param.setResult("false");
+                        }
+                        if ("ro.sys.fw.bg_apps_limit".equals(key)) {
+                            param.setResult("32");
+                        }
                     }
                 }
             }
