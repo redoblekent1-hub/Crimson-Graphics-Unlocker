@@ -14,21 +14,29 @@ public class MainHook implements IXposedHookLoadPackage {
             return;
         }
         
+        // Hook the global system RAM metric query to trick the engine's capability check 
+        // without spoofing the physical GPU hardware lines
         XposedHelpers.findAndHookMethod(
-            "com.garena.game.codm.ConfigUtils", 
+            "java.lang.System", 
             lpparam.classLoader,
-            "getDevicePerformanceTier", 
+            "getProperty",
+            String.class,
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    param.setResult(3); 
+                    String property = (String) param.args[0];
+                    if ("os.arch".equals(property)) {
+                        param.setResult("aarch64");
+                    }
                 }
             }
         );
 
+        // Force Android's ActivityManager memory reports to fake a high-tier free memory overhead 
+        // to bypass the engine's low-RAM draw-distance clamping
         XposedHelpers.findAndHookMethod(
-            "com.garena.game.codm.ConfigUtils",
+            "android.app.ActivityManager",
             lpparam.classLoader,
-            "isLowEndDevice",
+            "isLowRamDevice",
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     param.setResult(false);
