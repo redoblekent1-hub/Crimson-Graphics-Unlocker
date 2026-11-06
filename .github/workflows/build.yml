@@ -25,16 +25,18 @@ jobs:
       with:
         gradle-version: 8.2
 
-    - name: Force Injection of Valid Manifest File
+    - name: Force Injection of Strict Official Manifest
       run: |
-        echo '<?xml version="1.0" encoding="utf-8"?>' > app/src/main/AndroidManifest.xml
-        echo '<manifest xmlns:android="http://android.com">' >> app/src/main/AndroidManifest.xml
-        echo '    <application android:hasCode="true" android:label="Crimson Graphics">' >> app/src/main/AndroidManifest.xml
-        echo '        <meta-data android:name="xposedmodule" android:value="true" />' >> app/src/main/AndroidManifest.xml
-        echo '        <meta-data android:name="xposeddescription" android:value="Unlocks Ultra/Extreme graphics presets." />' >> app/src/main/AndroidManifest.xml
-        echo '        <meta-data android:name="xposedminversion" android:value="82" />' >> app/src/main/AndroidManifest.xml
-        echo '    </application>' >> app/src/main/AndroidManifest.xml
-        echo '</manifest>' >> app/src/main/AndroidManifest.xml
+        cat << 'EOF' > app/src/main/AndroidManifest.xml
+        <?xml version="1.0" encoding="utf-8"?>
+        <manifest xmlns:android="http://android.com">
+            <application android:hasCode="true" android:label="Crimson Graphics">
+                <meta-data android:name="xposedmodule" android:value="true" />
+                <meta-data android:name="xposeddescription" android:value="Unlocks Ultra/Extreme graphics presets." />
+                <meta-data android:name="xposedminversion" android:value="82" />
+            </application>
+        </manifest>
+        EOF
 
     - name: Build Debug APK with Wrapper
       run: gradle assembleDebug
