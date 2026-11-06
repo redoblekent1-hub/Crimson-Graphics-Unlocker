@@ -20,11 +20,24 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Initialize Gradle Wrapper Engine
-      run: gradle wrapper --gradle-version 8.2 --distribution-type bin
+    - name: Setup Gradle Environment
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: 8.2
+
+    - name: Force Injection of Valid Manifest File
+      run: |
+        echo '<?xml version="1.0" encoding="utf-8"?>' > app/src/main/AndroidManifest.xml
+        echo '<manifest xmlns:android="http://android.com">' >> app/src/main/AndroidManifest.xml
+        echo '    <application android:hasCode="true" android:label="Crimson Graphics">' >> app/src/main/AndroidManifest.xml
+        echo '        <meta-data android:name="xposedmodule" android:value="true" />' >> app/src/main/AndroidManifest.xml
+        echo '        <meta-data android:name="xposeddescription" android:value="Unlocks Ultra/Extreme graphics presets." />' >> app/src/main/AndroidManifest.xml
+        echo '        <meta-data android:name="xposedminversion" android:value="82" />' >> app/src/main/AndroidManifest.xml
+        echo '    </application>' >> app/src/main/AndroidManifest.xml
+        echo '</manifest>' >> app/src/main/AndroidManifest.xml
 
     - name: Build Debug APK with Wrapper
-      run: ./gradlew assembleDebug
+      run: gradle assembleDebug
 
     - name: Upload Finished APK Artifact
       uses: actions/upload-artifact@v4
