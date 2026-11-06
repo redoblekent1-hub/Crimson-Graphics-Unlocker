@@ -22,7 +22,7 @@ public class MainHook implements IXposedHookLoadPackage {
             String.class,
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    String property = (String) param.args[0];
+                    String property = (String) param.args;
                     if ("os.arch".equals(property)) {
                         param.setResult("aarch64");
                     }
@@ -38,6 +38,25 @@ public class MainHook implements IXposedHookLoadPackage {
             new XC_MethodHook() {
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     param.setResult(false);
+                }
+            }
+        );
+
+        // 3. Inject system properties to unlock high-performance asset streaming thresholds
+        XposedHelpers.findAndHookMethod(
+            "android.os.SystemProperties",
+            lpparam.classLoader,
+            "get",
+            String.class,
+            new XC_MethodHook() {
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    String key = (String) param.args;
+                    if ("ro.config.low_ram".equals(key)) {
+                        param.setResult("false");
+                    }
+                    if ("ro.sys.fw.bg_apps_limit".equals(key)) {
+                        param.setResult("32");
+                    }
                 }
             }
         );
